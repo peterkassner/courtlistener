@@ -1,0 +1,33 @@
+{
+  "name": "Ghidra Codespace with VNC",
+  "dockerFile": "Dockerfile",
+  "context": "..",
+  "appPort": [ "6080:6080", "5901:5901" ],
+  "runArgs": [
+    "--cap-add=SYS_PTRACE",
+    "--security-opt=seccomp:unconfined"
+  ],
+  "features": {
+    "ghcr.io/devcontainers/features/dotfiles:1": {
+      "repository": "https://github.com/peterkassner/dotfiles",
+      "installCommand": "~/dotfiles/install.sh",
+      "targetPath": "~/"
+    }
+  },
+  "mounts": [
+    "source=/mnt/data,target=/mnt/data,type=bind"
+  ],
+  "postCreateCommand": "sudo ./setupvnc2.sh",
+  "postStartCommand": "sudo pkill x11vnc; sudo pkill Xvfb; DISPLAY=:99 startxfce4 & sudo ./setup_novnc.sh",
+  "remoteUser": "codespace",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.shell.linux": "/bin/zsh"
+      },
+      "extensions": [
+        "ms-vscode-remote.remote-containers", "ms-python.python"
+      ]
+    }
+  }
+}
