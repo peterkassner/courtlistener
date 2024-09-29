@@ -16,10 +16,7 @@
       "dotfiles_path": "~/.dotfiles"
     }
  },  
-  "mounts": [
-    "source=/mnt/data,target=/mnt/data,type=bind"
-  ],
-  "postCreateCommand": "git clone https://github.com/peterkassner/dotfiles.git ~/.dotfiles && cd ~/.dotfiles && ./install.sh && sudo ./setupvnc2.sh",
+  "postCreateCommand": "sudo ./setupvnc2.sh",
   "postStartCommand": "sudo pkill x11vnc; sudo pkill Xvfb; DISPLAY=:99 startxfce4 & sudo ./setup_novnc.sh",
   "remoteUser": "codespace",
   "customizations": {
