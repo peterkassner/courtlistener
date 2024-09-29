@@ -6,14 +6,16 @@
   "runArgs": [
     "--cap-add=SYS_PTRACE",
     "--security-opt=seccomp:unconfined"
-  ],
+  ],  
   "features": {
-    "ghcr.io/devcontainers/features/dotfiles:1": {
-      "repository": "https://github.com/peterkassner/dotfiles",
-      "installCommand": "~/dotfiles/install.sh",
-      "targetPath": "~/"
+    "ghcr.io/devcontainers/features/common-utils:2.5.1": {},
+    "ghcr.io/deep-space-cartel/devcontainers-features/starship:1": {},
+    "ghcr.io/jpawlowski/devcontainer-features/codespaces-dotfiles:1": {
+      "dotfiles_repo": "https://github.com/peterkassner/dotfiles",
+      "install_script": "install.sh",
+      "dotfiles_path": "~/.dotfiles"
     }
-  },
+ },  
   "mounts": [
     "source=/mnt/data,target=/mnt/data,type=bind"
   ],
