@@ -59,6 +59,7 @@ urlpatterns = [
     path("", include("cl.api.urls")),
     path("", include("cl.visualizations.urls")),
     path("", include("cl.stats.urls")),
+    path("research-sync/", include("cl.research_sync.urls")),
     # Sitemaps
     path(
         "sitemap.xml",

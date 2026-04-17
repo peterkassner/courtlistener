@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}Research sync — CourtListener{% endblock %}
+{% block content %}
+  <div class="container py-4">
+    <h1>Research sync</h1>
+    <p class="lead">
+      Tracked queries and dockets sync against the remote CourtListener API.
+      Configure <code>RESEARCH_SYNC</code> in Django settings and run
+      <code>python manage.py research_sync</code>.
+    </p>
+
+    <h2>Enabled targets</h2>
+    {% if targets %}
+      <ul>
+        {% for t in targets %}
+          <li><strong>{{ t.name }}</strong> — {{ t.get_kind_display }}
+            {% if t.kind == "search" %}<code>{{ t.query_string|truncatechars:80 }}</code>{% endif %}
+            {% if t.kind == "docket" %}docket id {{ t.remote_docket_id }}{% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>No enabled targets. Add <strong>Sync targets</strong> in the admin.</p>
+    {% endif %}
+
+    <h2 class="mt-4">Unread hits</h2>
+    {% if unread_hits %}
+      <table class="table table-sm">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Target</th>
+            <th>Cluster</th>
+            <th>Link</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for h in unread_hits %}
+            <tr>
+              <td>{{ h.title|default:"—" }}</td>
+              <td>{{ h.target.name }}</td>
+              <td>{{ h.remote_cluster_id|default:"—" }}</td>
+              <td>
+                {% if h.remote_detail_url %}
+                  <a href="{{ h.remote_detail_url }}" rel="noopener" target="_blank">CourtListener</a>
+                {% endif %}
+                {% if h.remote_pdf_url %}
+                  · <a href="{{ h.remote_pdf_url }}" rel="noopener" target="_blank">PDF</a>
+                {% endif %}
+              </td>
+              <td>
+                <form method="post" action="{% url 'research_sync:mark_read' h.id %}">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-outline-secondary btn-sm">Mark read</button>
+                </form>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>No unread hits.</p>
+    {% endif %}
+  </div>
+{% endblock %}
