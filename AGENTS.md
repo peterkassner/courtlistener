@@ -1,10 +1,18 @@
 # AGENTS.md
 
+**Open issue — [local storage layout, search history, and sync artifact organization](ISSUES-LIST.md#open-local-storage-layout-and-search-history-undetermined):** where relational data vs files should live long-term is [not fully decided](ISSUES-LIST.md); see [ISSUES-LIST.md](ISSUES-LIST.md) for backlog items (0–4).
+
 ## Cursor Cloud specific instructions
 
 ### Overview
 
 CourtListener is a Django 5.1 legal research platform (Python 3.12) with React/webpack frontend assets. See `README.md` for general context.
+
+### Research sync (current local layout)
+
+- **Relational:** `cl.research_sync` tables in PostgreSQL — `SyncTarget`, `SyncRun`, `LocalHit` (includes `snapshot` JSON per hit). There is no separate “search history” table yet; runs are logged on `SyncRun`.
+- **PDFs (optional):** `LocalHit.local_file` → under **`MEDIA_ROOT`**, default **`cl/assets/media/research_sync/pdfs/<year>/<month>/`** (override with env `MEDIA_ROOT`).
+- **Broader layout** (registries, digests, mail/RSS): tracked in [ISSUES-LIST.md](ISSUES-LIST.md).
 
 ### Architecture
 
