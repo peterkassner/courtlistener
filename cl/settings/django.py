@@ -181,6 +181,7 @@ INSTALLED_APPS = [
     "cl.stats",
     "cl.users",
     "cl.visualizations",
+    "cl.research_sync",
 ]
 
 if DEVELOPMENT:

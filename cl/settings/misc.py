@@ -53,3 +53,20 @@ FUNDRAISING_MODE = env("FUNDRAISING_MODE", default=False)
 # Key for Follow the Money API
 FTM_KEY = env("FTM_KEY", default="")
 FTM_LAST_UPDATED = env("FTM_LAST_UPDATED", default=date.today())
+
+#####################
+# Research sync     #
+#####################
+# Personal sync layer (`cl.research_sync`): calls remote CourtListener API.
+RESEARCH_SYNC = {
+    "REMOTE_API_BASE_URL": env(
+        "RESEARCH_SYNC_REMOTE_API_BASE_URL",
+        default="https://www.courtlistener.com",
+    ),
+    "REMOTE_API_TOKEN": env("RESEARCH_SYNC_REMOTE_API_TOKEN", default=""),
+    "REMOTE_API_TIMEOUT": env.int("RESEARCH_SYNC_REMOTE_API_TIMEOUT", default=60),
+    "REMOTE_STORAGE_URL_PREFIX": env(
+        "RESEARCH_SYNC_REMOTE_STORAGE_URL_PREFIX",
+        default="https://storage.courtlistener.com/",
+    ),
+}
